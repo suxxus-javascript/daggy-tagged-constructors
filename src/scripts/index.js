@@ -14,13 +14,14 @@ const handleResult = res => {
 };
 
 // example
-const hasPermission = list => permission => list.includes(permission);
+const hasPermission = userPermissions => section =>
+  userPermissions.includes(section);
 
 const permissions = daggy.taggedSum('permissions', {
-  user: ['user'],
-  questionAdmin: ['questionAdmin'],
-  answerAdmin: ['answerAdmin'],
-  superUser: ['superUser'],
+  user: ['section'],
+  questionAdmin: ['section'],
+  answerAdmin: ['section'],
+  superUser: ['section'],
 });
 
 const handleUserType = usersPermissions =>
