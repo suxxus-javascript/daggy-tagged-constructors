@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "node"
+script:
+  - npm run lint
+  - npm test
+  - npm run check
+  - npm run coverall
+notifications:
+  email: false
+# whitelist
+branches:
+  only:
+    - master

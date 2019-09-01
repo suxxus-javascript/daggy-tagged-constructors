@@ -1,0 +1,43 @@
+{
+  "name": "node-project-starter",
+  "version": "1.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suxxus/start-node-project"
+  },
+  "author": "suxxus",
+  "license": "ISC",
+  "description": "node project starter, lint-tape ",
+  "scripts": {
+    "lint": "eslint --color src || true",
+    "test": "NODE_PATH=src tape src/tests | tap-spec || true",
+    "coverage": "NODE_PATH=src `npm bin`/istanbul cover src/tests/index.js",
+    "coverall": "npm run-script coverage",
+    "start": "watch --silent  -p 'src/**/*.js' -c 'npm test'",
+    "check": "npm outdated --depth=0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "codeclimate-test-reporter": "0.5.0",
+    "coveralls": "3.0.1",
+    "eslint": "4.19.1",
+    "eslint-cli": "1.1.1",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-config-eslint": "4.0.0",
+    "eslint-plugin-import": "2.12.0",
+    "istanbul": "0.4.5",
+    "prettier": "1.18.2",
+    "tap-colorize": "1.2.0",
+    "tap-spec": "5.0.0",
+    "watch-cli": "0.2.3"
+  },
+  "keywords": [
+    "node",
+    "project"
+  ],
+  "dependencies": {
+    "daggy": "1.4.0",
+    "tape": "4.9.1"
+  }
+}
