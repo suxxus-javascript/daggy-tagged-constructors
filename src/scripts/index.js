@@ -7,7 +7,6 @@ const result = daggy.taggedSum('result', {
 });
 
 const handleResult = res => {
-  console.log(res);
   return res.cata({
     success: value => value,
     error: value => value,
@@ -15,7 +14,6 @@ const handleResult = res => {
 };
 
 // example
-
 const permissions = daggy.taggedSum('permissions', {
   user: ['user'],
   questionAdmin: ['questionAdmin'],
