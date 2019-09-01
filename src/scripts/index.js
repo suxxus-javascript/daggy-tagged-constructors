@@ -14,6 +14,8 @@ const handleResult = res => {
 };
 
 // example
+const hasPermission = list => permission => list.includes(permission);
+
 const permissions = daggy.taggedSum('permissions', {
   user: ['user'],
   questionAdmin: ['questionAdmin'],
@@ -21,27 +23,25 @@ const permissions = daggy.taggedSum('permissions', {
   superUser: ['superUser'],
 });
 
-const handleUserType = users =>
-  users.cata({
-    user: section => ['SECTION_USER'].includes(section),
+const handleUserType = usersPermissions =>
+  usersPermissions.cata({
+    user: hasPermission(['SECTION_USER']),
 
-    questionAdmin: section =>
-      ['SECTION_QUESTIONS_ADMIN', 'SECTION_USER'].includes(section),
+    questionAdmin: hasPermission(['SECTION_QUESTIONS_ADMIN', 'SECTION_USER']),
 
-    answerAdmin: section =>
-      ['SECTION_ANSWER_ADMIN', 'SECTION_USER'].includes(section),
+    answerAdmin: hasPermission(['SECTION_ANSWER_ADMIN', 'SECTION_USER']),
 
-    superUser: section =>
-      [
-        'SECTION_ANSWER_ADMIN',
-        'SECTION_QUESTIONS_ADMIN',
-        'SECTION_USER',
-      ].includes(section),
+    superUser: hasPermission([
+      'SECTION_ANSWER_ADMIN',
+      'SECTION_QUESTIONS_ADMIN',
+      'SECTION_USER',
+    ]),
   });
 
 module.exports = {
   result,
   handleResult,
+  hasPermission,
   permissions,
   handleUserType,
 };

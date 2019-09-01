@@ -2,6 +2,7 @@ const test = require('tape');
 const {
   result,
   handleResult,
+  hasPermission,
   permissions,
   handleUserType,
 } = require('scripts');
@@ -20,6 +21,27 @@ test('given a value should return an object with this value', t => {
 
   actual = JSON.stringify(result.error('this is an error'));
   expect = JSON.stringify({ error: 'this is an error' });
+  t.equal(actual, expect);
+
+  t.end();
+});
+
+test('given a value, checks if exists in the list', t => {
+  let actual;
+  let expect;
+
+  const list = randomItem([
+    ['duck', 'dog', 'elephant'],
+    ['cat', 'lion', 'hipo'],
+  ]);
+
+  const value = randomItem(list);
+  actual = hasPermission(list)(value);
+  expect = true;
+  t.equal(actual, expect);
+
+  actual = hasPermission(list)('fish');
+  expect = false;
   t.equal(actual, expect);
 
   t.end();
