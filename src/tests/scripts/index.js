@@ -7,7 +7,7 @@ const {
   handleUserType,
 } = require('scripts');
 
-const randomItem = myArray =>
+const getRandomItemFromList = myArray =>
   myArray[Math.floor(Math.random() * myArray.length)];
 
 test('given a value should return an object with this value', t => {
@@ -30,12 +30,12 @@ test('given a value, checks if exists in the list', t => {
   let actual;
   let expect;
 
-  const list = randomItem([
+  const list = getRandomItemFromList([
     ['duck', 'dog', 'elephant'],
     ['cat', 'lion', 'hipo'],
   ]);
 
-  const value = randomItem(list);
+  const value = getRandomItemFromList(list);
   actual = hasPermission(list)(value);
   expect = true;
   t.equal(actual, expect);
@@ -52,12 +52,12 @@ test('handleResult do something depending on result', t => {
   let expect;
   let val;
 
-  val = randomItem(['success', 'go', 'yes']);
+  val = getRandomItemFromList(['success', 'go', 'yes']);
   actual = handleResult(result.success(val));
   expect = val;
   t.equal(actual, expect);
 
-  val = randomItem(['error', 'bad', 'no']);
+  val = getRandomItemFromList(['error', 'bad', 'no']);
   actual = handleResult(result.error(val));
   expect = val;
 
@@ -70,7 +70,7 @@ test('handleUserTypes return the value depending on the user type', t => {
   let expect;
   let val;
 
-  val = randomItem([
+  val = getRandomItemFromList([
     'SECTION_ANSWER_ADMIN',
     'SECTION_QUESTIONS_ADMIN',
     'SECTION_USER',
@@ -79,7 +79,10 @@ test('handleUserTypes return the value depending on the user type', t => {
   expect = true;
   t.equal(actual, expect, 'all permissions for super user');
 
-  val = randomItem(['SECTION_ANSWER_ADMIN', 'SECTION_QUESTIONS_ADMIN']);
+  val = getRandomItemFromList([
+    'SECTION_ANSWER_ADMIN',
+    'SECTION_QUESTIONS_ADMIN',
+  ]);
   actual = handleUserType(permissions.user('SECTION_USER'));
   expect = true;
   t.equal(actual, expect, 'userType: user, section: USER ');
@@ -89,10 +92,10 @@ test('handleUserTypes return the value depending on the user type', t => {
   t.equal(
     actual,
     expect,
-    'userType: user, no permission for anwer or questions sections',
+    'userType: user, no permission for answer or questions sections',
   );
 
-  val = randomItem(['SECTION_USER', 'SECTION_QUESTIONS_ADMIN']);
+  val = getRandomItemFromList(['SECTION_USER', 'SECTION_QUESTIONS_ADMIN']);
   actual = handleUserType(permissions.questionAdmin(val));
   expect = true;
   t.equal(
@@ -109,7 +112,7 @@ test('handleUserTypes return the value depending on the user type', t => {
     'userType: questionAdmin, no permission for answerAdmin section',
   );
 
-  val = randomItem(['SECTION_USER', 'SECTION_ANSWER_ADMIN']);
+  val = getRandomItemFromList(['SECTION_USER', 'SECTION_ANSWER_ADMIN']);
   actual = handleUserType(permissions.answerAdmin(val));
   expect = true;
   t.equal(
